@@ -32,10 +32,19 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testGetUrl()
     {
-        $url = $this->helper->getUrl('foo', 'foobar.org', '3DHTQX4GCRKHGS55CJ');
+        $url = $this->helper->getUrl('AcmeIssuer', 'foo', 'foobar.org', '3DHTQX4GCRKHGS55CJ');
 
-        $expected = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/foo@foobar.org%3Fsecret%3D3DHTQX4GCRKHGS55CJ";
+        $expected = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth%3A%2F%2Ftotp%2FAcmeIssuer%3Afoo%40foobar.org%3Fsecret%3D3DHTQX4GCRKHGS55CJ%26issuer%3DAcmeIssuer";
 
         $this->assertEquals($expected, $url);
+    }
+
+    public function testGetOtpUrl()
+    {
+        $otpUrl = $this->helper->getOtpUrl('AcmeCorp', 'foo', 'foobar.org', '3DHTQX4GCRKHGS55CJ');
+
+        $expected = 'otpauth://totp/AcmeCorp:foo@foobar.org?secret=3DHTQX4GCRKHGS55CJ&issuer=AcmeCorp';
+
+        $this->assertEquals($expected, $otpUrl);
     }
 }
