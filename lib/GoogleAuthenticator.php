@@ -127,7 +127,7 @@ class GoogleAuthenticator
     {
         $secret = "";
         for ($i = 1; $i <= $this->secretLength; $i++) {
-            $c = rand(0, 255);
+            $c = ord(openssl_random_pseudo_bytes(1));
             $secret .= pack("c", $c);
         }
 
